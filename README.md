@@ -47,7 +47,7 @@ $ python evaluate_caffe_net_ranking.py cup.jpg caffenet bvlc_reference_caffenet.
 or
 
 ```sh
-$ python evaluate_caffe_net_ranking.py cup.jpg caffenet bvlc_reference_caffenet.caffemodel -b ./
+$ python evaluate_caffe_net_ranking.py banana.jpg caffenet bvlc_reference_caffenet.caffemodel -b ./
 ```
 
 
@@ -57,15 +57,21 @@ $ python evaluate_caffe_net_ranking.py cup.jpg caffenet bvlc_reference_caffenet.
 ![cup](./cup.jpg)
 
 ```
-Loading Caffe model file bvlc_reference_caffenet.caffemodel...
-Loaded
-1 | n03063599 coffee mug | 59.7%
-2 | n07930864 cup | 34.7%
-3 | n07920052 espresso |  2.6%
-4 | n04263257 soup bowl |  1.3%
-5 | n03775546 mixing bowl |  1.2%
+1 | n07930864 cup | 46.7%
+2 | n03063599 coffee mug | 46.3%
+3 | n03775546 mixing bowl |  2.4%
+4 | n07920052 espresso |  2.4%
+5 | n04263257 soup bowl |  1.6%
 ```
 
 ![banana](./banana.jpg)
+
+```
+1 | n07753592 banana | 78.8%
+2 | n07716358 zucchini, courgette |  8.9%
+3 | n03476684 hair slide |  1.4%
+4 | n07718472 cucumber, cuke |  1.2%
+5 | n01694178 African chameleon, Chamaeleo chamaeleon |  1.1%
+```
 
 
