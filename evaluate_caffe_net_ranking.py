@@ -24,7 +24,7 @@ from chainer.links import caffe
 
 parser = argparse.ArgumentParser(
     description='Evaluate a Caffe reference model on ILSVRC2012 dataset')
-parser.add_argument('dataset', help='Path to validation image-label list file')
+parser.add_argument('imagefile', help='Path to validation image-label list file')
 parser.add_argument('model_type',
                     choices=('alexnet', 'caffenet', 'googlenet', 'resnet'),
                     help='Model type (alexnet, caffenet, googlenet, resnet)')
@@ -33,25 +33,16 @@ parser.add_argument('--basepath', '-b', default='/',
                     help='Base path for images in the dataset')
 parser.add_argument('--mean', '-m', default='ilsvrc_2012_mean.npy',
                     help='Path to the mean file')
-parser.add_argument('--batchsize', '-B', type=int, default=100,
-                    help='Minibatch size')
+# parser.add_argument('--batchsize', '-B', type=int, default=100,
+                    # help='Minibatch size')
 parser.add_argument('--gpu', '-g', type=int, default=-1,
                     help='Zero-origin GPU ID (nevative value indicates CPU)')
 args = parser.parse_args()
 if args.gpu >= 0:
     cuda.check_cuda_available()
 xp = cuda.cupy if args.gpu >= 0 else np
-assert args.batchsize > 0
 
-
-dataset = []
-with open(args.dataset) as list_file:
-    for line in list_file:
-        pair = line.strip().split()
-        path = os.path.join(args.basepath, pair[0])
-        dataset.append((path, np.int32(pair[1])))
-
-assert len(dataset) % args.batchsize == 0
+print('Load file='+ args.imagefile)
 
 categories = np.loadtxt('synset_words.txt', str, delimiter="\t")
 top_k=5
@@ -97,30 +88,22 @@ start = cropwidth // 2
 stop = start + in_size
 mean_image = mean_image[:, start:stop, start:stop].copy()
 
-x_batch = np.ndarray((args.batchsize, 3, in_size, in_size), dtype=np.float32)
-y_batch = np.ndarray((args.batchsize,), dtype=np.int32)
+x_batch = np.ndarray((1, 3, in_size, in_size), dtype=np.float32)
+y_batch = np.ndarray((1,), dtype=np.int32)
 
-i = 0
-count = 0
-for path, label in dataset:
-    image = Image.open(path).resize((256,256,))
-    image = np.asarray(image).transpose(2, 0, 1)[::-1]
-    image = image[:, start:stop, start:stop].astype(np.float32)
-    image -= mean_image
+image = Image.open(args.imagefile).resize((256,256,))
+image = np.asarray(image).transpose(2, 0, 1)[::-1]
+image = image[:, start:stop, start:stop].astype(np.float32)
+image -= mean_image
 
-    x_batch[i] = image
-    # y_batch[i] = label
-    i += 1
+x_batch[0] = image
+x_data = xp.asarray(x_batch)
 
-    if i == args.batchsize:
-        x_data = xp.asarray(x_batch)
-        # y_data = xp.asarray(y_batch)
+x = chainer.Variable(x_data, volatile=True)
 
-        x = chainer.Variable(x_data, volatile=True)
-        # t = chainer.Variable(y_data, volatile=True)
+score = predict(x)
+prediction = zip(score.data[0].tolist(), categories)
+prediction.sort(cmp=lambda x,y: cmp(x[0],y[0]),reverse=True)
+for rank,(score,name) in enumerate(prediction[:top_k],start=1):
+    print('%d | %s | %4.1f%%' % (rank,name,score *100))
 
-        score = predict(x)
-        prediction = zip(score.data[0].tolist(), categories)
-        prediction.sort(cmp=lambda x,y: cmp(x[0],y[0]),reverse=True)
-        for rank,(score,name) in enumerate(prediction[:top_k],start=1):
-            print('%d | %s | %4.1f%%' % (rank,name,score *100))
