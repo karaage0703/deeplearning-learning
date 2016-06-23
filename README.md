@@ -1,9 +1,7 @@
 # deeplearning-learning
 Study deeplearning
 
-
 # Setup
-
 ## Install Chainer
 
 Please see chainer website
@@ -43,10 +41,20 @@ $ cp ~/caffe/data/ilsvrc12/synset_words.txt ./
 
 ## Run test
 ```sh
-$ python evaluate_caffe_net_ranking.py test.txt caffenet bvlc_reference_caffenet.caffemodel -b ./ -B 1
+$ python evaluate_caffe_net_ranking.py cup.jpg caffenet bvlc_reference_caffenet.caffemodel -b ./
 ```
 
-### Result
+or
+
+```sh
+$ python evaluate_caffe_net_ranking.py cup.jpg caffenet bvlc_reference_caffenet.caffemodel -b ./
+```
+
+
+# Result
+
+## Cup
+![cup](./cup.jpg)
 
 ```
 Loading Caffe model file bvlc_reference_caffenet.caffemodel...
@@ -57,3 +65,7 @@ Loaded
 4 | n04263257 soup bowl |  1.3%
 5 | n03775546 mixing bowl |  1.2%
 ```
+
+![banana](./banana.jpg)
+
+
