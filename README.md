@@ -34,7 +34,7 @@ $ cd deeplearning-learning
 ```
 
 ```sh
-$ cp ~/chainer/examples/modelzoo/ilsvrc_2012_mean.npy_20 ./
+$ cp ~/chainer/examples/modelzoo/ilsvrc_2012_mean.npy ./
 $ cp ~/chainer/examples/modelzoo/bvlc_reference_caffenet.caffemodel ./
 $ cp ~/caffe/data/ilsvrc12/synset_words.txt ./
 ```
