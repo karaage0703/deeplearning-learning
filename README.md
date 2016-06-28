@@ -75,3 +75,5 @@ $ python evaluate_caffe_net_ranking.py banana.jpg caffenet bvlc_reference_caffen
 ```
 
 
+# License
+This software is released under the MIT License, see LICENSE.
