@@ -69,18 +69,18 @@ elif args.model_type == 'googlenet':
     mean_image[1] = 117
     mean_image[2] = 123
 
-    def forward(x, t):
+    def predict(x):
         y, = func(inputs={'data': x}, outputs=['loss3/classifier'],
                   disable=['loss1/ave_pool', 'loss2/ave_pool'],
                   train=False)
-        return F.softmax_cross_entropy(y, t), F.accuracy(y, t)
+        return F.softmax(y)
 elif args.model_type == 'resnet':
     in_size = 224
     mean_image = np.load(args.mean)
 
-    def forward(x, t):
+    def predict(x):
         y, = func(inputs={'data': x}, outputs=['prob'], train=False)
-        return F.softmax_cross_entropy(y, t), F.accuracy(y, t)
+        return F.softmax(y)
 
 
 cropwidth = 256 - in_size
