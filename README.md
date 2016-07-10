@@ -77,3 +77,10 @@ $ python evaluate_caffe_net_ranking.py banana.jpg caffenet bvlc_reference_caffen
 
 # License
 This software is released under the MIT License, see LICENSE.
+
+# Authors
+- karaage0703
+- shi3z (inspect_camera.py)
+
+# Reference
+- https://github.com/shi3z/chainer_imagenet_tools
