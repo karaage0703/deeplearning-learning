@@ -81,6 +81,8 @@ This software is released under the MIT License, see LICENSE.
 # Authors
 - karaage0703
 - shi3z (inspect_camera.py)
+- AtsushiSakai(translate.py)
 
 # Reference
 - https://github.com/shi3z/chainer_imagenet_tools
+- https://github.com/AtsushiSakai/PythonTranslation/tree/master
