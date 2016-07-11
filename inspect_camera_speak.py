@@ -68,10 +68,12 @@ mean_image = mean_image[:, start:stop, start:stop].copy()
 target_shape = (256, 256)
 output_side_length=256
 
-categories = np.loadtxt('synset_words.txt', str, delimiter="\t")
+categories = np.loadtxt('labels_jp.txt', str, delimiter="\t")
 
 cam = cv2.VideoCapture(0)
 count=0
+tmp_name=''
+
 while True:
     ret, capture = cam.read()
     if not ret:
@@ -116,8 +118,11 @@ while True:
 
         for rank, (score, name) in enumerate(prediction[:top_k], start=1):
             print(name)
-            cmd = "say " + name 
-            subprocess.call(cmd, shell=True)
+            if name != tmp_name:
+                cmd = "say " + name 
+                subprocess.call(cmd, shell=True)
+
+            tmp_name = name
             
         count=0
 
