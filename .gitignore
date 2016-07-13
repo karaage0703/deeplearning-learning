@@ -1,3 +1,4 @@
 ilsvrc_2012_mean.npy
 synset_words.txt
 *.caffemodel
+*.pkl
