@@ -18,6 +18,7 @@ import chainer
 from chainer import cuda
 import chainer.functions as F
 from chainer.functions import caffe
+import cPickle as pickle
 
 import subprocess
 
@@ -32,9 +33,20 @@ parser.add_argument('--gpu', '-g', type=int, default=-1,
                     help='Zero-origin GPU ID (nevative value indicates CPU)')
 args = parser.parse_args()
 
-print('Loading Caffe model file %s...' % args.model, file=sys.stderr)
-func = caffe.CaffeFunction(args.model)
-print('Loaded', file=sys.stderr)
+root, ext = os.path.splitext(args.model)
+
+if ext == ".caffemodel":
+    print('Loading Caffe model file %s...' % args.model, file=sys.stderr)
+    func = caffe.CaffeFunction(args.model)
+    print('Loaded', file=sys.stderr)
+elif ext == ".pkl":
+    print('Loading Caffe model file %s...' % args.model, file=sys.stderr)
+    func = pickle.load(open(args.model, 'rb'))
+    print('Loaded', file=sys.stderr)
+else:
+    print('model format is wrong. Choose modelname.caffemodel or modelname.pkl')
+    quit()
+
 if args.gpu >= 0:
     cuda.init(args.gpu)
     func.to_gpu()
