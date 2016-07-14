@@ -20,7 +20,10 @@ import chainer
 from chainer import cuda
 import chainer.functions as F
 from chainer.links import caffe
+import cPickle as pickle
+import time
 
+start_time = time.time()
 
 parser = argparse.ArgumentParser(
     description='Evaluate a Caffe reference model on ILSVRC2012 dataset')
@@ -44,12 +47,25 @@ xp = cuda.cupy if args.gpu >= 0 else np
 
 print('Load file='+ args.imagefile)
 
+
 categories = np.loadtxt('synset_words.txt', str, delimiter="\t")
 top_k=5
 
-print('Loading Caffe model file %s...' % args.model, file=sys.stderr)
-func = caffe.CaffeFunction(args.model)
-print('Loaded', file=sys.stderr)
+root, ext = os.path.splitext(args.model)
+
+if ext == ".caffemodel":
+    print('Loading Caffe model file %s...' % args.model, file=sys.stderr)
+    func = caffe.CaffeFunction(args.model)
+    print('Loaded', file=sys.stderr)
+elif ext == ".pkl":
+    print('Loading Caffe model file %s...' % args.model, file=sys.stderr)
+    func = pickle.load(open(args.model, 'rb'))
+    print('Loaded', file=sys.stderr)
+else:
+    print('model format is wrong. Choose modelname.caffemodel or modelname.pkl')
+    quit()
+
+
 if args.gpu >= 0:
     cuda.get_device(args.gpu).use()
     func.to_gpu()
@@ -107,3 +123,5 @@ prediction.sort(cmp=lambda x,y: cmp(x[0],y[0]),reverse=True)
 for rank,(score,name) in enumerate(prediction[:top_k],start=1):
     print('%d | %s | %4.1f%%' % (rank,name,score *100))
 
+diff_time = time.time() - start_time
+print('time:' + str(diff_time)+'s')

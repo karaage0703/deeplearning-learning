@@ -31,9 +31,6 @@ parser.add_argument('--gpu', '-g', type=int, default=-1,
                     help='Zero-origin GPU ID (nevative value indicates CPU)')
 args = parser.parse_args()
 
-# print('Loading Caffe model file %s...' % args.model, file=sys.stderr)
-# func = caffe.CaffeFunction(args.model)
-# print('Loaded', file=sys.stderr)
 root, ext = os.path.splitext(args.model)
 
 if ext == ".caffemodel":
