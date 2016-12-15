@@ -89,6 +89,10 @@ while True:
         print('error')
         break
     cv2.imshow('chainer inspector', capture)
+    key = cv2.waitKey(1)
+    if key == 27: # when ESC key is pressed break
+        break
+
     count += 1
     if count == 30:
         image = capture.copy()

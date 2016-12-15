@@ -92,6 +92,10 @@ while True:
         print('error')
         break
     cv2.imshow('chainer inspector', capture)
+    key = cv2.waitKey(1)
+    if key == 27: # when ESC key is pressed break
+        break
+
     count += 1
     if count == 30:
         image = capture.copy()
@@ -131,11 +135,11 @@ while True:
         for rank, (score, name) in enumerate(prediction[:top_k], start=1):
             print(name)
             if name != tmp_name:
-                cmd = "say " + name 
+                cmd = "say " + name
                 subprocess.call(cmd, shell=True)
 
             tmp_name = name
-            
+
         count=0
 
 
