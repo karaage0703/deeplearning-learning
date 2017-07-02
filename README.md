@@ -80,9 +80,10 @@ This software is released under the MIT License, see LICENSE.
 
 # Authors
 - karaage0703
-- shi3z (inspect_camera.py)
-- AtsushiSakai(translate.py)
+- [shi3z](https://github.com/shi3z) (inspect_camera.py)
+- [AtsushiSakai](https://github.com/AtsushiSakai) (translate.py)
+- [SonyCSL](https://github.com/SonyCSL/CSLAIER) (examples/family_face_recognition)
 
 # Reference
 - https://github.com/shi3z/chainer_imagenet_tools
-- https://github.com/AtsushiSakai/PythonTranslation/tree/master
+- https://github.com/AtsushiSakai/PythonTranslation
