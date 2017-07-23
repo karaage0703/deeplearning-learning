@@ -4,7 +4,37 @@ Study deeplearning
 # Setup
 ## Install Chainer
 
-Please see chainer website
+### Mac
+Install `pyenv` `anaconda-anaconda-2.4.0`.
+
+Execute following command:
+```sh
+$ pip install chainer==1.8.1
+```
+
+### Linux
+Install Ubuntu14.04.3
+
+Execute following commands:
+```sh
+$ sudo apt-get update
+$ sudo apt-get install python-pip python-dev
+$ sudo pip install cython
+$ sudo apt-get install libhdf5-dev
+$ sudo pip install chainer==1.8.1
+```
+
+### Raspberry Pi
+Install Raspbian Jessie.
+
+Execute following commands:
+```sh
+$ sudo apt-get update
+$ sudo apt-get install python-pip python-dev
+$ sudo pip install cython
+$ sudo apt-get install libhdf5-dev
+$ sudo pip install chainer
+```
 
 ## Download ImgeNet2012 image file name and label list
 ```sh
